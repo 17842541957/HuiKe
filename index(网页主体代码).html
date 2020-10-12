@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>食品分析系统</title>
+        <link rel="icon" href="images/logo.ico" type="image/x-icon"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body{
+                padding-top: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--导航开始-->
+        <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand" onclick="location.reload();">食品分析系统</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#" id="ClickHome">首页</a></li>
+                        <li><a href="javascript:void(0)" id="ClickIdentification">智能识别</a></li>
+                        <li><a href="javascript:void(0)" id="ClickRecommend">智能推荐</a></li>
+                        <li><a href="javascript:void(0)" id="ClickAnalyze">营养分析</a></li>
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#login" id="showlogin" style="display:none;">登录</a></li>
+                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#sign_in" id="showsign" style="display:none;">注册</a></li>
+                        <li><a href="javascript:void(0)" style="display: none;" id="showUsername">xxx</a></li>
+                        <li><a href="javascript:void(0)"style="display: none;" id="btn_exit">退出登录</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--导航结束-->
+
+        <!--窗体主体结束-->
+        <!--首页内容开始-->
+        <div class="jumbotron" id="home">
+            <div class="container">
+                <h1>欢迎来到食品分析系统</h1>
+                <h2>系统简述</h2>
+                <div>
+                    <h3>菜品识别</h3>
+                    <p>
+                        做菜小白、减肥、健身人士、众多用户的共同选择
+                    </p>
+                </div>
+                <div>
+                    <h3>我们能为您带来什么</h3>
+                    <ul>
+                        <li><h4>根据您现有食材，为你推荐菜谱</h4></li>
+                        <li><h4>为您量身打造，制定适合您的方案，不同时期为您推荐不同方案</h4></li>
+                        <li><h4>AI智能工具简化您的生活</h4></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>拍照识别菜品，智慧分析，一键解决您的烦恼</h3>
+                </div>
+                <div>
+                    <h3>权威数据和AI算法</h3>
+                    <ul>
+                        <li><h4>数据后台计算</h4></li>
+                        <li><h4>推荐算法，为您量身定做</h4></li>
+                        <li><h4>图像识别，识别您的“菜谱”</h4></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--首页内容结束-->
+
+        <!--智能识别开始-->
+        <div id="identification" style="display:none;">
+            <div class="jumbotron" align="center">
+                <h1>智能识别</h1>
+                <p>运行图像识别算法，智能识别食材，帮助您识别食材</p>
+                <h3>现在让我们开始吧</h3>
+                <button class="btn btn-success" data-toggle="modal" data-target="#madal_VegetableDishes">素菜识别</button>
+                <button class="btn btn-info" data-toggle="modal" data-target="#info">使用说明</button>
+            </div>
+        </div>
+        <!--智能识别结束-->
+
+        <!--智能推荐开始-->
+        <div id="recommend" style="display:none;">
+            <div class="jumbotron">
+                <h1 align="center">智能推荐</h1>
+                <p>
+                    <h4 align="center">请先<a data-toggle="modal" data-target="#like">设置喜好</a>，根据您现有的营养，为您做出以下<a id="Recommend">推荐</a></h4>
+                </p>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-md-offset-3">
+                        <div class="thumbnail">
+                            <img src="images/qc.jpg" alt="" id="re_img">
+                            <div class="caption">
+                                <h3 id="re_title" align="center">{菜品名称}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--智能推荐结束-->
+
+        <!--营养分析开始-->
+        <div id="analyze" style="display:none;">
+            <h1 align="center"><b>营养分析</b></h1>
+            <div align="center">
+                <form class="navbar-form" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg" placeholder="搜索" id="search_value">
+                        <button type="button" class="btn btn-default input-lg" id="search_btn">搜索</button>
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="search_warning" style="display:none;width:300px">抱歉！您输入的数据未找到！请重新输入</div>
+                </form>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>数据列表</h4></div>
+                    <ul class="list-group" style="font-size: 20px" id="nutrition_a">
+                        
+                    </ul>
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+
+        <!--营养分析结束-->
+
+        <!--窗体主体结束-->
+
+        <!--登录模态框开始-->
+        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" align="center" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">登录</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-2">
+                                    <label>账户名：</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" id="username" name="username">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-2">
+                                    <label>密码：</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="password" id="password" name="password">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-success" id="ButtonLogin">登录</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--登录模态框结束-->
+
+        <!--注册模态框开始-->
+        <div class="modal fade" id="sign_in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" align="center" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">注册</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-2">
+                                    <label>账户名：</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" id="SignUserName" name="username">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-2">
+                                    <label>密码：</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="password" id="SignPassWord" name="password">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-success" id="SignBtn">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--注册模态框结束-->
+
+        <!--智能识别素菜模态框开始-->
+        <div class="modal fade" id="madal_VegetableDishes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" align="center" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">智能识别(素菜)</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <form>
+                            <h4>上传文件</h4>
+                            <input type="file" id="file_img01">
+                        </form>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">识别结果</div>
+                        <div class="panel-body" id="vegetable_content">
+                            Panel content
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_img01">开始</button>
+                        <button type="button" class="btn btn-info" id="img_result01">查看结果</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--智能识别素菜模态框结束-->
+
+        <!--智能识别荤菜模态框开始-->
+        <div class="modal fade" id="madal_MeatDiet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" align="center" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">智能识别(荤菜)</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <form>
+                            <h4>上传文件</h4>
+                            <input type="file" id="file_img02">
+                        </form>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">识别结果</div>
+                        <div class="panel-body" id="meat_content">
+                            Panel content
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_img02">开始</button>
+                        <button type="button" class="btn btn-info" id="img_result02">查看结果</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--智能识别荤菜模态框结束-->
+
+        <!--营养分析数据模态框开始-->
+        <div class="modal fade" id="Nutritional_analysis_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" align="center" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="nutrition_title"></h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>含量</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data">
+                                <tr>
+                                    <th>能量（kcal)</th>
+                                    <th name="NL_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>水分（g）</th>
+                                    <th name="SF_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>蛋白质（g）</th>
+                                    <th name="DBZ_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>脂肪（g)</th>
+                                    <th name="ZF_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>碳水化合物（g）</th>
+                                    <th name="TSHHW_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>钾（mg）</th>
+                                    <th name="J_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>钠（mg)</th>
+                                    <th name="N_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>钙（mg)</th>
+                                    <th name="G_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>磷(mg)</th>
+                                    <th name="L_data"></th>
+                                </tr>
+                                <tr>
+                                    <th>胆固醇（mg)</th>
+                                    <th name="DGC_data"></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--营养分析数据模态框结束-->
+        <!--营养分析使用说明模态框开始-->
+        <div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">使用说明</h4>
+                    </div>
+                    <div class="modal-body">
+                        1、模型准确率为70%
+                        <br>
+                        2、当前模型能够识别的有：苦瓜、辣椒、番茄、白菜
+                        <br>
+                        3、第一步上传图片，选择好图片后点击开始(点击完稍等一会，等待上传成功提醒)
+                        <br>
+                        4、上传成功后点击查看结果即可
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--营养分析使用说明模态框结束-->
+        <!--喜好设置模态框开始-->
+        <div class="modal fade" id="like" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" align="center" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">喜好设置</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <div class="row" align="center">
+                            <div class="col-sm-6 col-md-6 col-md-offset-3">
+                                <div class="thumbnail">
+                                    <img src="images/虾.jpg">
+                                    <div class="caption">
+                                        <h5>烤虾</h5>
+                                        <p>
+                                            <select id="shrimp">
+                                                <option value ="0">喜欢</option>
+                                                <option value ="1">不喜欢</option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-sm-6 col-md-6 col-md-offset-3">
+                                <div class="thumbnail">
+                                    <img src="images/鲍鱼.jpg">
+                                    <div class="caption">
+                                        <h5>鲍鱼</h5>
+                                        <p>
+                                            <select id="abalone">
+                                                <option value ="0">喜欢</option>
+                                                <option value ="1">不喜欢</option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-sm-6 col-md-6 col-md-offset-3">
+                                <div class="thumbnail">
+                                    <img src="images/炒白菜.jpg">
+                                    <div class="caption">
+                                        <h5>炒白菜</h5>
+                                        <p>
+                                            <select id="Chinese_cabbage">
+                                                <option value ="0">喜欢</option>
+                                                <option value ="1">不喜欢</option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-sm-6 col-md-6 col-md-offset-3">
+                                <div class="thumbnail">
+                                    <img src="images/烤羊排.jpg">
+                                    <div class="caption">
+                                        <h5>烤羊排</h5>
+                                        <p>
+                                            <select id="lamb_chop">
+                                                <option value ="0">喜欢</option>
+                                                <option value ="1">不喜欢</option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-sm-6 col-md-6 col-md-offset-3">
+                                <div class="thumbnail">
+                                    <img src="images/苦瓜汤.jpg">
+                                    <div class="caption">
+                                        <h5>苦瓜汤</h5>
+                                        <p>
+                                            <select id="bitter_gourd">
+                                                <option value ="0">喜欢</option>
+                                                <option value ="1">不喜欢</option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-sm-6 col-md-6 col-md-offset-3">
+                                <div class="thumbnail">
+                                    <img src="images/蔬菜沙拉.jpg">
+                                    <div class="caption">
+                                        <h5>蔬菜沙拉</h5>
+                                        <p>
+                                            <select id="green_salad">
+                                                <option value ="0">喜欢</option>
+                                                <option value ="1">不喜欢</option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-sm-6 col-md-6 col-md-offset-3">
+                                <div class="thumbnail">
+                                    <img src="images/羊肉汤.jpg">
+                                    <div class="caption">
+                                        <h5>羊肉汤</h5>
+                                        <p>
+                                            <select id="mutton_soup">
+                                                <option value ="0">喜欢</option>
+                                                <option value ="1">不喜欢</option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="like_btn">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--喜好设置模态框结束-->
+
+        <script src="jQuery/jquery-3.4.1.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="jQuery/jquery.cookie.js"></script>
+        <script>
+            $('#showlogin').show();
+            $('#showsign').show();
+        </script>
+        <script>
+            function create_ele(parent_id){
+                var ele="<a></a>";
+                $('#'+parent_id).append(ele);
+            }
+            $.ajax({
+                type:'post',
+                url:'php/getdata.php',
+                dataType:'json',
+                success:function(e){
+                    var count=Number(e.count);
+                    for(var i=0;i<count-1;i++){
+                        create_ele("nutrition_a");
+                    };
+                }
+            });
+            $.ajax({
+                type:'post',
+                url:'php/getnames.php',
+                dataType:'json',
+                success:function(e){
+                    var names = new Array();
+                    for(var i=0;i<e.length-1;i++){
+                        names[i]=e[i];
+                    }
+                    $("#nutrition_a>a").attr("class","list-group-item");
+                    $("#nutrition_a>a").attr("data-toggle","modal");
+                    $("#nutrition_a>a").attr("data-target","#Nutritional_analysis_data");
+                    $("#nutrition_a>a").each(function(index,element){
+                        $(element).attr("data",names[index]);
+                        $(element).text(names[index]);
+                    });
+                    /*营养分析模态框*/
+                    $("#nutrition_a>a").click(function(){
+                        var text=$(this).text();
+                        $("#nutrition_title").html(text);
+                        $.ajax({
+                            type:'post',
+                            url:'php/nutrition.php',
+                            dataType:'json',
+                            data:{
+                                font:text
+                            },
+                            success:function(res){
+                                $('th[name="NL_data"]').text(res.result['NL']);
+                                $('th[name^="SF"]').text(res.result['SF']);
+                                $('th[name^="DBZ"]').text(res.result['DBZ']);
+                                $('th[name^="ZF"]').text(res.result['ZF']);
+                                $('th[name^="TSHHW"]').text(res.result['TSHHW']);
+                                $('th[name^="J"]').text(res.result['J']);
+                                $('th[name^="N"]').text(res.result['N']);
+                                $('th[name^="G"]').text(res.result['G']);
+                                $('th[name^="L"]').text(res.result['L']);
+                                $('th[name^="DGC"]').text(res.result['DGC']);
+                            }
+
+                        });
+                    });
+
+                    /*营养分析搜索*/
+                    $("#search_btn").click(function(){
+                        var search_value=$("#search_value").val();
+                        if($("a[data="+search_value+"]").length>0){
+                            $('#search_warning').hide();
+                            $("a[data="+search_value+"]").click();
+                            $("#search_value").val("");
+                        }else{
+                            $('#search_warning').show();
+                        }
+                        
+                    });
+                }
+            });
+            /*登录检查*/
+            var LoginCheck=0; //登录检查 1为登录成功 0为未登录 功能需登录才可使用
+            var user_name="";
+            if($.cookie("username")!=null){
+                user_name=$.cookie("username");
+                LoginCheck=1;
+                $('#login').modal('hide');
+                $('#showlogin').hide();
+                $('#showsign').hide();
+                $("#showUsername").show();
+                $("#btn_exit").show();
+                $("#showUsername").html("欢迎回来！"+user_name);
+            }
+            
+
+            /*顶部导航点击事件开始*/
+            $("#ClickHome").click(function () {
+                if(LoginCheck===1){
+                    $("#ClickRecommend").parent().removeClass("active");
+                    $("#ClickAnalyze").parent().removeClass("active");
+                    $("#ClickIdentification").parent().removeClass("active");
+                    $("#ClickMyData").parent().removeClass("active");
+                    $("#ClickHome").parent().addClass("active");
+                    $("#identification").hide();
+                    $("#recommend").hide();
+                    $("#analyze").hide();
+                    $("#mydata").hide();
+                    $("#home").show();
+                }else{
+                    alert("请先登录！");
+                }
+            });
+            $("#ClickIdentification").click(function () {
+                if(LoginCheck===1){
+                    $("#ClickRecommend").parent().removeClass("active");
+                    $("#ClickAnalyze").parent().removeClass("active");
+                    $("#ClickIdentification").parent().addClass("active");
+                    $("#ClickMyData").parent().removeClass("active");
+                    $("#ClickHome").parent().removeClass("active");
+                    $("#identification").show();
+                    $("#recommend").hide();
+                    $("#analyze").hide();
+                    $("#mydata").hide();
+                    $("#home").hide();
+                }else{
+                    alert("请先登录！");
+                }
+            });
+            $("#ClickRecommend").click(function () {
+                if(LoginCheck===1){
+                    $("#ClickRecommend").parent().addClass("active");
+                    $("#ClickAnalyze").parent().removeClass("active");
+                    $("#ClickIdentification").parent().removeClass("active");
+                    $("#ClickMyData").parent().removeClass("active");
+                    $("#ClickHome").parent().removeClass("active");
+                    $("#identification").hide();
+                    $("#recommend").show();
+                    $("#analyze").hide();
+                    $("#mydata").hide();
+                    $("#home").hide();
+                }else{
+                    alert("请先登录！");
+                }
+            });
+            $("#ClickAnalyze").click(function () {
+                if(LoginCheck===1){
+                    $("#ClickRecommend").parent().removeClass("active");
+                    $("#ClickAnalyze").parent().addClass("active");
+                    $("#ClickIdentification").parent().removeClass("active");
+                    $("#ClickMyData").parent().removeClass("active");
+                    $("#ClickHome").parent().removeClass("active");
+                    $("#identification").hide();
+                    $("#recommend").hide();
+                    $("#analyze").show();
+                    $("#mydata").hide();
+                    $("#home").hide();
+                }else{
+                    alert("请先登录！");
+                }
+            });
+            $("#ClickMyData").click(function () {
+                if(LoginCheck===1){
+                    $("#ClickRecommend").parent().removeClass("active");
+                    $("#ClickAnalyze").parent().removeClass("active");
+                    $("#ClickIdentification").parent().removeClass("active");
+                    $("#ClickMyData").parent().addClass("active");
+                    $("#ClickHome").parent().removeClass("active");
+                    $("#identification").hide();
+                    $("#recommend").hide();
+                    $("#analyze").hide();
+                    $("#mydata").show();
+                    $("#home").hide();
+                }else{
+                    alert("请先登录！");
+                }
+            });
+            /*顶部导航点击事件结束*/
+
+            /*智能识别(上传图片)部分开始*/
+            $("#file_img01").change(function(){
+                var img_path = document.querySelector("#file_img01").value;
+                var lastindex=img_path.lastIndexOf(".");
+                var suffix = img_path.substr(lastindex);
+                var lower_suffix = suffix.toLowerCase();
+                if(lower_suffix!=".jpg"&&lower_suffix!=".jpeg"){
+                    alert("上传文件格式错误！支持的格式有：jpg / jpeg");
+                    $("#file_img01").val("");
+                }
+            });
+            $("#file_img02").change(function(){
+                var img_path = document.querySelector("#file_img02").value;
+                var lastindex=img_path.lastIndexOf(".");
+                var suffix = img_path.substr(lastindex);
+                var lower_suffix = suffix.toLowerCase();
+                if(lower_suffix!=".jpg"&&lower_suffix!=".jpeg"){
+                    alert("上传文件格式错误！支持的格式有：jpg / jpeg");
+                    $("#file_img02").val("");
+                }
+            });
+            $("#btn_img01").click(function(){
+                var fileInput = $('#file_img01').get(0).files[0];
+	            if(fileInput){
+		            read_img("file_img01",user_name,'dishes',"#file_img01");
+	            }else{
+		            alert("请选择上传文件！");
+	            }
+            });
+            $("#btn_img02").click(function(){
+                var fileInput = $('#file_img02').get(0).files[0];
+	            if(fileInput){
+		            read_img("file_img02",user_name,'dishes',"#file_img02");
+	            }else{
+		            alert("请选择上传文件！");
+	            }
+            });
+            /*登录部分*/
+            $("#ButtonLogin").click(function () {
+                var use=$("#username").val();
+                var pwd=$("#password").val();
+                if(use.trim().length==0||pwd.trim().length==0){
+                    alert("账户或密码不能为空或空格，请重新输入！");
+                    return;
+                }
+                $.ajax({
+                    type:'post',
+                    url:'php/login.php',
+                    dataType:'json',
+                    data:{
+                        username:use,
+                        password:pwd
+                    },
+                    success:function(res){
+                        //返回的infoCode：0-成功 1-失败 2-数据库连接失败
+                        switch(res.infoCode){
+                            case 0:{
+                                user_name=use;
+                                LoginCheck=1;
+                                $('#login').modal('hide');
+                                $('#showlogin').hide();
+                                $('#showsign').hide();
+                                $("#showUsername").show();
+                                $("#btn_exit").show();
+                                $("#showUsername").html("欢迎回来！"+use);
+                                var expiresDate= new Date();
+                                expiresDate.setTime(expiresDate.getTime() + (60*60*1000));
+                                $.cookie("username",use,{expires: expiresDate});
+                            }
+                                break;
+                            case 1:{
+                                alert("登录失败！用户名或密码错误！");
+                            }
+                                break;
+                            case 2:{
+                                alert("登录失败！连接超时！");
+                            }
+                                break;
+                            default:{
+                                alert("未知错误");
+                            }
+                                break;
+                        }
+                    }
+                });
+                $("#username").val('');
+                $("#password").val('');
+            });
+
+            /*注册部分*/
+            $("#SignBtn").click(function () {
+                var use=$("#SignUserName").val();
+                var pwd=$("#SignPassWord").val();
+                if(use.trim().length==0||pwd.trim().length==0){
+                    alert("账户或密码不能为空或空格，请重新输入！");
+                    return;
+                }
+                $.ajax({
+                    type:'post',
+                    url:'php/sign.php',
+                    dataType:'json',
+                    data:{
+                        username:use,
+                        password:pwd
+                    },
+                    success:function(res){
+                        //返回的infoCode：0-成功 1-失败 2-数据库连接失败
+                        console.log(res);
+                        switch(res.infoCode){
+                            case 0:{
+                                alert("注册成功！请使用该账户登录");
+                            }
+                                break;
+                            case 1:{
+                                alert("注册失败！该账户已存在");
+                            }
+                                break;
+                            case 2:{
+                                alert("注册失败！连接超时！");
+                            }
+                                break;
+                            default:{
+                                alert("未知错误");
+                            }
+                                break;
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
+                $("#SignUserName").val('');
+                $("#SignPassWord").val('');
+            });
+            $('#btn_exit').click(function(){
+                $("#ClickRecommend").parent().removeClass("active");
+                $("#ClickAnalyze").parent().removeClass("active");
+                $("#ClickIdentification").parent().removeClass("active");
+                $("#ClickMyData").parent().removeClass("active");
+                $("#ClickHome").parent().addClass("active");
+                $("#identification").hide();
+                $("#recommend").hide();
+                $("#analyze").hide();
+                $("#mydata").hide();
+                $("#home").show();
+                LoginCheck=0;
+                $.cookie('username','',{ expires: -1 }); 
+                $("#showUsername").hide();
+                $("#btn_exit").hide();
+                $('#showlogin').show();
+                $('#showsign').show();
+            });
+
+            
+            
+            /*图片文件上传方法*/
+            function uploadImg(fileid,data,username,classa,id) {
+                if($("#"+fileid).val() != "") {
+                    var myDate = new Date();
+                    dates=myDate.toLocaleDateString();
+                    $.ajax({
+                        type: "POST",
+                        url:"php/img_upload.php",
+                        dataType: "json",
+                        data:{
+                            img:data,
+                            user:username,
+                            class:classa,
+                            time:dates
+                        },
+                        success: function(d){
+                            if(d.Code == 0) {
+                                alert("上传成功");
+                                console.log(d);
+                            }else{
+                                alert("上传失败！请重新上传")
+                            }     
+                        },
+                        error: function (jqXHR,textStatus,errorThrown) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                            return;
+                        }
+                    });
+                } else {
+                    alert("请先选择文件");
+                }
+            }
+            function read_img(fileid,username,classa,id){
+                var reads = new FileReader();
+                file = document.getElementById(fileid).files[0];
+                reads.readAsDataURL(file);
+                reads.onload = function(e) {
+                    var data = this.result;
+                    uploadImg(fileid,data,username,classa,id);
+                };    
+            }
+            $("#img_result02").click(function(){
+                $.ajax({
+                    type: "POST",
+                    url:"php/load_result.php",
+                    dataType: "json",
+                    data:{
+                        user:user_name
+                    },
+                    success: function(d){
+                        if(d.code=="0"){
+                            $("#meat_content").html("羊肉");
+                        }
+                        if(d.code=="1"){
+                            $("#meat_content").html("猪肉");
+                        }
+                        if(d.code=="2"){
+                            $("#meat_content").html("虾");
+                        }
+                        if(d.code=="3"){
+                            $("#meat_content").html("鲍鱼");
+                        }
+                    }
+                });
+            });
+            $("#img_result01").click(function(){
+                $.ajax({
+                    type: "POST",
+                    url:"php/load_result.php",
+                    dataType: "json",
+                    data:{
+                        user:user_name
+                    },
+                    success: function(d){
+                        console.log(d);
+                        if(d.code=="0"){
+                            $("#vegetable_content").html("苦瓜");
+                        }
+                        if(d.code=="1"){
+                            $("#vegetable_content").html("辣椒");
+                        }
+                        if(d.code=="2"){
+                            $("#vegetable_content").html("番茄");
+                        }
+                        if(d.code=="3"){
+                            $("#vegetable_content").html("白菜");
+                        }
+                    },
+                    error:function(a,b,c){
+                        console.log(a);
+                    }
+                });
+            });
+            $("#like_btn").click(function(){
+                var likes = new Array();
+                likes["username"]=user_name;
+                likes["shrimp"]=$("#shrimp").val();
+                likes["abalone"]=$("#abalone").val();
+                likes["Chinese_cabbage"]=$("#Chinese_cabbage").val();
+                likes["lamb_chop"]=$("#lamb_chop").val();
+                likes["bitter_gourd"]=$("#bitter_gourd").val();
+                likes["green_salad"]=$("#green_salad").val();
+                likes["mutton_soup"]=$("#mutton_soup").val();
+                console.log(likes);
+                $.ajax({
+                    type:'POST',
+                    url:'php/upload_like.php',
+                    dataType: "json",
+                    data:{
+                        "username":likes['username'],
+                        "shrimp":likes['shrimp'],
+                        "abalone":likes['abalone'],
+                        "Chinese_cabbage":likes['Chinese_cabbage'],
+                        "lamb_chop":likes['lamb_chop'],
+                        "bitter_gourd":likes['bitter_gourd'],
+                        "green_salad":likes['green_salad'],
+                        "mutton_soup":likes['mutton_soup']
+                    },
+                    success:function(e){
+                        if(e.zeroCode==0 || e.oneCode==0){
+                            alert("设置成功！");
+                        }else{
+                            console.log(e);
+                        }
+                    },
+                    error: function (jqXHR,textStatus,errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                        return;
+                    }
+                });
+            });
+            $("#Recommend").click(function(){
+                $.ajax({
+                    type:'post',
+                    url:'php/Recommend.php',
+                    dataType:'json',
+                    data:{
+                        username:user_name
+                    },
+                    success:function(e){
+                        if(e=="0"){
+                            $("#re_img").attr('src',"images/虾.jpg");
+                            $("#re_title").html("烤虾");
+                        }
+                        if(e=="1"){
+                            $("#re_img").attr('src',"images/鲍鱼.jpg");
+                            $("#re_title").html("鲍鱼");
+                        }
+                        if(e=="2"){
+                            $("#re_img").attr('src',"images/炒白菜.jpg");
+                            $("#re_title").html("炒白菜");
+                        }
+                        if(e=="3"){
+                            $("#re_img").attr('src',"images/烤羊排.jpg");
+                            $("#re_title").html("烤羊排");
+                        }
+                        if(e=="4"){
+                            $("#re_img").attr('src',"images/苦瓜汤.jpg");
+                            $("#re_title").html("苦瓜汤");
+                        }
+                        if(e=="5"){
+                            $("#re_img").attr('src',"images/蔬菜沙拉.jpg");
+                            $("#re_title").html("蔬菜沙拉");
+                        }
+                        if(e=="6"){
+                            $("#re_img").attr('src',"images/羊肉汤.jpg");
+                            $("#re_title").html("羊肉汤");
+                        }
+                    },
+                    error:function(a,b,c){
+                        console.log(a);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
